@@ -8,4 +8,6 @@
 <p>Deletion by index</p>
 <p>Replace by element</p>
 <p>Replace by index</p>
+<p>Search by element</p>
+<p>Search by position</p>
 <p>Print the linked list....</p>
