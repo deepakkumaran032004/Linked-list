@@ -1,52 +1,252 @@
-# Prerequisites
-*.d
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node *next;
+}*head=NULL;
+int n=0;
+//function to add a element
+void add(int ele)
+{
+    struct node *newNode;
+    //new memory allocation 
+    newNode=(struct node*)malloc(sizeof(struct node));
+    //giving valuse to the node
+    newNode->data=ele;
+    newNode->next=NULL;
+    //attaching the value to the list
+    if(head==NULL)
+    {
+        head=newNode;
+    }
+    else{
+        struct node *temp=head;
+        while(temp->next!=NULL)
+        {
+            temp=temp->next;
+        }
+        temp->next=newNode;
+    }
+    n++;
+}
+//function to insert a element at particular index
+void insert(int pos,int ele)  //two parameters 1.position 2.element...
+{
+    if(pos==n){
+        add(ele);
+    }
+    else if(pos<0||pos>n){
+        printf("#error:->>False INDEX\n");
+    }
+    else{
+    struct node *newNode;
+    //new memory allocation 
+    newNode=(struct node*)malloc(sizeof(struct node));
+    //giving valuse to the node
+    newNode->data=ele;
+    newNode->next=NULL;
+    //inserting the newnode to an existing list
+    if(pos==0){
+        newNode->next=head;
+        head=newNode;
+        n++;
+    }
+    else{
+        struct node *temp=head,*previous;
+        int index=0;
+        while(temp->next!=NULL)
+        {
+            if(index==pos)
+                break;
+            previous=temp;
+            temp=temp->next;
+        }
+        previous->next=newNode;
+        newNode->next=temp;
+        }
+        n++;
+        }
+}
+//function to delete a element by searching the element
+void delete_ele(int ele){
+    int flag=0;
+    struct node *temp=head,*previous;
+    while(temp->next!=NULL)
+    {
+        if(temp->data==ele){
+            flag=1;
+            break;
+        }
+        previous=temp;
+        temp=temp->next;
+    }
+    if(temp->data==ele){
+        flag=1;
+    }
+    if(flag==1&&temp!=head){
+    previous->next=temp->next;
+    free(temp);
+    }
+    else if(temp==head){
+        head=temp->next;
+        free(temp);
+    }
+    else{
+        printf("#error:->>The element is not present in the list\n");
+    }
+    n--;
+}
+//function to delete element with index
+void delete_pos(int pos){
+    if(pos>-1&&pos<n){
+        if(pos==0){
+            struct node*temp=head;
+            head=head->next;
+            free(temp);
+            n--;
+        }
+        else{
+            struct node *temp=head,*previous;
+            int index=0;
+            while(temp->next!=NULL)
+            {
+                if(index==pos){
+                    break;
+                }
+                previous=temp;
+                temp=temp->next;
+                index++;
+            }
+            previous->next=temp->next;
+            free(temp);
+            n--;
+        }
+    }
+    else{
+        printf("#error:->>Invalid index\n");
+    }
+}
+//function to replace by element
+void replace_by_ele(int search,int ele){
+    struct node *temp=head;
+    int flag=0;
+    while(temp->next!=NULL)
+    {
+        if(temp->data==search){
+            temp->data=ele;
+            flag=1;
+            break;
+        }
+        temp=temp->next;
+    }
+    if(temp->data==search){
+        flag=1;
+        temp->data=ele;
+    }
+    if(flag==0){
+        printf("#error:->>search element not present\n");
+    }
+}
+//function to replace by index
+void replace_by_pos(int pos,int ele)
+{
+    if(pos>=0&&pos<=n){
+        struct node *temp=head;
+        int index=0;
+        while(temp->next!=NULL)
+        {
+            if(index==pos){
+                temp->data=ele;
+                break;
+            }
+            temp=temp->next;
+            index++;
+        }
+        if(index==pos){
+            temp->data=ele;
+        }
+    }
+    else{
+        printf("#error:->>Invalid INDEX\n");
+    }
+       
+}
+//search an element and return index
+void search_by_ele(int ele){
+    struct node *temp=head;
+    int index=0,flag=0;
+    while(temp->next!=NULL)
+    {
+        if(temp->data==ele){
+            flag=1;
+            break;
+        }
+        index++;
+        temp=temp->next;
+    }
+    if(temp->data==ele){
+        flag=1;
+    }
+    if(flag==1)
+        printf("The index of element %d is %d\n",ele,index);
+    else
+        printf("The element is not found\n");
+       
+}
+//function to search by index (return the value in the index)
+//search an element and return index
+void search_by_pos(int pos){
+    struct node *temp=head;
+    int index=0,flag=0;
+    while(temp->next!=NULL)
+    {
+        if(index==pos){
+            //printf("%d",temp->data);
+            flag=1;
+            break;
+        }
+        index++;
+        temp=temp->next;
+    }
+    if(index==pos){
+        flag=1;
+    }
+    if(flag==1)
+        printf("The element in the index %d is %d\n",index,temp->data);
+    else
+        printf("#error:->>Invalid INDEX\n");
+       
+}
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+//print function
+void print(){
+    struct node *temp=head;
+    while(temp->next!=NULL)
+        {
+            printf("%d ",temp->data);
+            temp=temp->next;
+        }
+        printf("%d \n",temp->data);
+}
+//Main function
+int main(){
+    add(1);
+    add(2);
+    add(3);
+    add(4);
+    add(5);
+    print();
+    insert(55,88);
+    print();
+    delete_ele(55);
+    print();
+    delete_pos(10);
+   // delete_ele(10);//invalid input
+    print();
+    replace_by_ele(5,40);
+    print();
+    replace_by_pos(4,5);
+    print();
+    search_by_ele(5);
+    search_by_pos(66);
+}
