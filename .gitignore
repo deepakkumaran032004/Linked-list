@@ -193,6 +193,32 @@ void search_by_ele(int ele){
         printf("The element is not found\n");
        
 }
+//code to sort the linked list
+void sort(){
+    int flag=1;
+    struct node *temp=head,*previous;
+    while(flag==1){
+        flag=0;
+        temp=head,previous=head;
+        while(temp->next!=NULL)
+        {
+            if(previous->data>temp->data){
+                flag=1;
+                int a=temp->data;
+                temp->data=previous->data;
+                previous->data=a;
+            }
+            previous=temp;
+            temp=temp->next;
+        }
+        if(previous->data>temp->data){
+            flag=1;
+            int b=temp->data;
+            temp->data=previous->data;
+            previous->data=b;
+        }
+    }
+}
 //function to search by index (return the value in the index)
 //search an element and return index
 void search_by_pos(int pos){
@@ -230,10 +256,13 @@ void print(){
 }
 //Main function
 int main(){
-    add(1);
+    add(8);
     add(2);
-    add(3);
     add(4);
+    add(33);
+    add(55);
+    add(100);
+    add(99);
     add(5);
     print();
     insert(55,88);
@@ -249,4 +278,6 @@ int main(){
     print();
     search_by_ele(5);
     search_by_pos(66);
+    sort();
+    print();
 }
