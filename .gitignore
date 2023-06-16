@@ -219,6 +219,26 @@ void sort(){
         }
     }
 }
+//function to sort(easy)
+void sort1(){
+    int flag=1;
+    struct node *temp=head,*previous;
+    while(flag==1){
+        flag=0;
+        temp=head,previous=head;
+        for(int i=0;i<n;i++)
+        {
+            if(previous->data>temp->data){
+                flag=1;
+                int a=temp->data;
+                temp->data=previous->data;
+                previous->data=a;
+            }
+            previous=temp;
+            temp=temp->next;
+        }
+    }
+}
 //function to search by index (return the value in the index)
 //search an element and return index
 void search_by_pos(int pos){
